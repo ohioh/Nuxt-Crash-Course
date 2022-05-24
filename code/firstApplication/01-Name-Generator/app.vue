@@ -1,5 +1,6 @@
 <script setup lang="ts">
-
+import {Length, Gender, Popularity} from "@/data"
+// TS-Classes for the user-choise
 enum Gender {
   GIRL = 'Girl',
   BOY = 'Boy',
@@ -23,70 +24,98 @@ interface OptionsState {
   length: string;
 }
 
-const obj: OptionsState = {
+const options = reactive<OptionsState>({
   gender: Gender.GIRL,
   popularity: Popularity.TRENDY,
   length: Length.ALL
-}
-
-const options = reactive({
-  gender: "Unisex",
-  popularity: "Trendy",
-  length: "Short",
 });
+
+
+//Computing the Result Name 
+
+const name = ref<string[]>([])
+
+
 </script>
 
+
+<!-- Visual Content -->
 <template>
+
+<!-- Main Box for the user choise -->
   <div class="container">
     <h1>Name Generator</h1>
     <p>Find a Name</p>
 
     <div class="option-container-field">
+<!-- SEX -->
       <div class="option-container1">
         <h4>1) Choose a gender</h4>
         <div class="option-button-field"></div>
         <div class="option-button">
           <button class="option option-left"
-          :class="options.gender === 'Boy' && 'option-active'"
+          :class="options.gender === Gender.BOY && 'option-active'"
+          @click="options.gender = Gender.BOY"
           >Boy</button>
           <button 
             class="option option-middle"
-            :class="options.gender === 'Girl' && 'option-active'"
+            :class="options.gender === Gender.GIRL && 'option-active'"
+            @click="options.gender = Gender.GIRL"
           >
           Girl
           </button>
           <button class="option option-right"
-          :class="options.gender === 'Unisex' && 'option-active'"
+          :class="options.gender === Gender.UNISEX && 'option-active'"
+          @click="options.gender = Gender.UNISEX"
           >Unisex</button>
         </div>
       </div>
 
+<!-- Popularity -->
       <div class="option-container1">
         <h4>2) Choose the name's popularity</h4>
         <div class="option-button-field"></div>
         <div class="option-buttons">
           <button class="option option-left"
-          :class="options.popularity === 'Trendy' && 'option-active'"
+          :class="options.popularity === Popularity.TRENDY && 'option-active'"
+          @click="options.popularity = Popularity.TRENDY"
           >Trendy</button>
           <button class="option option-right"
-          :class="options.popularity === 'Unique' && 'option-active'"
+          :class="options.popularity === Popularity.UNIQUE && 'option-active'"
+          @click="options.popularity = Popularity.UNIQUE"
           >Unique</button>
         </div>
       </div>
-
+      
+<!-- Length -->
       <div class="option-container1">
         <h4>3) Choose the names length </h4>
         <div class="option-button-field"></div>
         <div class="option-buttons">
           <button class="option option-left"
-          :class="options.length === 'Long' && 'option-active'"
+          :class="options.length === Length.LONG && 'option-active'"
+          @click="options.length = Length.LONG"
           >Long</button>
           <button class="option option-middle"
-          :class="options.length === 'All' && 'option-active'"
+          :class="options.length === Length.ALL && 'option-active'"
+           @click="options.length = Length.ALL"
           >All</button>
           <button class="option option-right"
-          :class="options.length === 'Short' && 'option-active'"
+          :class="options.length === Length.SHORT && 'option-active'"
+           @click="options.length = Length.SHORT"
           >Short</button>
+        </div>
+      </div>
+
+<!-- Box for Output based on the user decission -->
+      <div class="option-container1">
+        <h4>Result </h4>
+        <div class="option-button-field"></div>
+        <div class="option-buttons">
+          <button class="option option-result">
+            Result
+
+          </button>
         </div>
       </div>
 
@@ -94,6 +123,7 @@ const options = reactive({
   </div>
 </template>
 
+<!-- STYLE -->
 <style scoped>
 .container {
   font-family: Arial, sans-serif;
@@ -146,8 +176,20 @@ const options = reactive({
   border-radius: 0 1rem 1rem 0;
 }
 
+.option-result {
+  border-radius: 1rem 1rem 1rem 1rem;
+  background-color: rgb(249,87,89);
+  color: white;
+  border-radius: 6.5rem;
+  font-size: 1rem;
+  padding: 0.75rem 4rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
 .option-active {   
   background: rgb(161, 142, 142);
 }
+
 </style>
 
